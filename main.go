@@ -6,77 +6,62 @@ import (
 
 func main() {
 	// Membuat struktur file system untuk testing
-	var root *Node
-	root = createSampleFileSystem()
-	
-	fmt.Println("=== SISTEM PENCARIAN FILE SYSTEM DENGAN DFS ===")
-	fmt.Println()
-	
-	// Menampilkan struktur file system
-	fmt.Println("Struktur File System:")
-	printFileSystem(root, 0)
-	fmt.Println()
-	
-	// Test pencarian dengan DFS Rekursif
-	fmt.Println("=== PENCARIAN DENGAN DFS REKURSIF ===")
-	var targetFile string
-	targetFile = "scheduler"
-	fmt.Printf("Mencari file: %s\n", targetFile)
-	
-	var path string
+	var userRoot *Node
+	var target, path string
+	var pilih int
 	var found bool
-	path, found = dfsRecursive(root, targetFile)
-	if found {
-		fmt.Printf("File ditemukan! Path: %s\n", path)
-	} else {
-		fmt.Printf("File %s tidak ditemukan.\n", targetFile)
-	}
-	fmt.Println()
+	userRoot = createSampleFileSystem()
 	
-	// Test pencarian dengan DFS Iteratif
-	fmt.Println("=== PENCARIAN DENGAN DFS ITERATIF ===")
-	targetFile = "math_assignment"
-	fmt.Printf("Mencari file: %s\n", targetFile)
-	
-	path, found = dfsIterative(root, targetFile)
-	if found {
-		fmt.Printf("File ditemukan! Path: %s\n", path)
-	} else {
-		fmt.Printf("File %s tidak ditemukan.\n", targetFile)
-	}
-	fmt.Println()
-	
-	// Test pencarian file lainnya
-	fmt.Println("=== TEST PENCARIAN FILE LAIN ===")
-	targetFile = "compiler"
-	fmt.Printf("Mencari file: %s\n", targetFile)
-	
-	path, found = dfsRecursive(root, targetFile)
-	if found {
-		fmt.Printf("File ditemukan! Path: %s\n", path)
-	} else {
-		fmt.Printf("File %s tidak ditemukan.\n", targetFile)
-	}
-	fmt.Println()
-	
-	// Test pencarian file yang tidak ada
-	fmt.Println("=== TEST FILE TIDAK ADA ===")
-	targetFile = "virus_scanner"
-	fmt.Printf("Mencari file: %s\n", targetFile)
-	
-	path, found = dfsIterative(root, targetFile)
-	if found {
-		fmt.Printf("File ditemukan! Path: %s\n", path)
-	} else {
-		fmt.Printf("File %s tidak ditemukan.\n", targetFile)
+	for (pilih != 4) {
+		fmt.Println("=== SISTEM PENCARIAN FILE SYSTEM DENGAN DFS ===")
+		fmt.Println("1. Tampilkan Diretory")
+		fmt.Println("2. Pencarian dengan DFS Rekursif")
+		fmt.Println("3. Pencarian dengan DFS Iteratif")
+		fmt.Println("4. Exit")
+		fmt.Print("Pilih: ")
+		fmt.Scanln(&pilih)
+		
+		switch pilih {
+			case 1:
+				fmt.Println("Struktur File System:")
+				printFileSystem(userRoot, 0)
+				fmt.Println()
+			case 2:
+				fmt.Println("=== PENCARIAN DENGAN DFS REKURSIF ===")
+				fmt.Print("Cari File Atau Directory: ")
+				fmt.Scanln(&target)
+				
+				path, found = dfsRecursive(userRoot, target)
+				if found {
+					fmt.Printf("File ditemukan! Path: %s\n", path)
+				} else {
+					fmt.Printf("File %s tidak ditemukan.\n", target)
+				}
+				fmt.Println()
+			case 3:
+				fmt.Println("=== PENCARIAN DENGAN DFS ITERATIF ===")
+				fmt.Print("Cari File Atau Directory: ")
+				fmt.Scanln(&target)
+				
+				path, found = dfsIterative(userRoot, target)
+				if found {
+					fmt.Printf("File ditemukan! Path: %s\n", path)
+				} else {
+					fmt.Printf("File %s tidak ditemukan.\n", target)
+				}
+				fmt.Println()
+			case 4:
+				fmt.Println("Terima kasih!")
+			default:
+				fmt.Println("Pilihan tidak valid!")
+			}
 	}
 }
 
 // Fungsi untuk membuat sample file system
 func createSampleFileSystem() *Node {
 	// Membuat struktur direktori
-	var root *Node
-	root = &Node{Name: "PacOS", IsDir: true}
+	root := &Node{Name: "PacOS", IsDir: true}
 	
 	// Level 1 - Direktori utama sistem
 	var system *Node
@@ -267,8 +252,7 @@ func printFileSystem(node *Node, level int) {
 	
 	// Print children
 	for i = 0; i < len(node.Children); i++ {
-		var child *Node
-		child = node.Children[i]
+		child := node.Children[i]
 		printFileSystem(child, level+1)
 	}
 }

@@ -7,12 +7,10 @@ func dfsIterative(root *Node, target string) (string, bool) {
 	}
 	
 	// Inisialisasi stack
-	var stack *Stack
-	stack = &Stack{}
+	stack := &Stack{}
 	
 	// Push root ke stack
-	var rootItem StackItem
-	rootItem = StackItem{
+	rootItem := StackItem{
 		node: root,
 		path: root.Name,
 	}
@@ -21,9 +19,7 @@ func dfsIterative(root *Node, target string) (string, bool) {
 	// Proses selama stack tidak kosong
 	for !isStackEmpty(stack) {
 		// Pop item dari stack
-		var item StackItem
-		var ok bool
-		item, ok = popStack(stack)
+		item, ok := popStack(stack)
 		if !ok {
 			break
 		}
@@ -48,10 +44,8 @@ func dfsIterative(root *Node, target string) (string, bool) {
 			// Push children dalam urutan terbalik agar diproses dari kiri ke kanan
 			var i int
 			for i = len(currentNode.Children) - 1; i >= 0; i-- {
-				var child *Node
-				child = currentNode.Children[i]
-				var childItem StackItem
-				childItem = StackItem{
+				child := currentNode.Children[i]
+				childItem := StackItem{
 					node: child,
 					path: currentPath + "/" + child.Name,
 				}

@@ -29,8 +29,7 @@ func popStack(s *Stack) (StackItem, bool) {
 		return StackItem{}, false
 	}
 	
-	var item StackItem
-	item = s.items[len(s.items)-1]
+	item := s.items[len(s.items)-1]
 	s.items = s.items[:len(s.items)-1]
 	return item, true
 }

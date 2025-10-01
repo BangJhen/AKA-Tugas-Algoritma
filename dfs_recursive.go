@@ -26,12 +26,10 @@ func dfsRecursiveHelper(node *Node, target string, currentPath string) (string, 
 	if node.IsDir {
 		var i int
 		for i = 0; i < len(node.Children); i++ {
-			var child *Node
-			child = node.Children[i]
+			child := node.Children[i]
 			
 			// Buat path baru
-			var newPath string
-			newPath = currentPath + "/" + child.Name
+			newPath := currentPath + "/" + child.Name
 			
 			// Rekursi ke child
 			var path string
