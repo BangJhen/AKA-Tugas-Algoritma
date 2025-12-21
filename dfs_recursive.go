@@ -1,11 +1,11 @@
 package main
 
-// dfsRecursive melakukan pencarian file menggunakan DFS secara rekursif
+// dfsRecursive melakukan pencarian file atau direktori menggunakan DFS secara rekursif
 func dfsRecursive(node *Node, target string) (string, bool) {
 	if node == nil {
 		return "", false
 	}
-	
+
 	// Panggil helper function dengan path awal
 	return dfsRecursiveHelper(node, target, node.Name)
 }
@@ -16,31 +16,33 @@ func dfsRecursiveHelper(node *Node, target string, currentPath string) (string, 
 	if node == nil {
 		return "", false
 	}
-	
-	// Cek apakah node saat ini adalah target
-	if !node.IsDir && node.Name == target {
+
+	// Cek apakah node saat ini adalah target (baik file maupun direktori)
+	// Operasi Dasar (Karena Sering Dilakukan)
+	if node.Name == target {
 		return currentPath, true
 	}
-	
+
 	// Jika node adalah direktori, cari di children-nya
 	if node.IsDir {
 		var i int
 		for i = 0; i < len(node.Children); i++ {
 			child := node.Children[i]
-			
+
 			// Buat path baru
 			newPath := currentPath + "/" + child.Name
-			
+
 			// Rekursi ke child
 			var path string
 			var found bool
+
 			path, found = dfsRecursiveHelper(child, target, newPath)
 			if found {
 				return path, true
 			}
 		}
 	}
-	
-	// File tidak ditemukan
+
+	// File/direktori tidak ditemukan
 	return "", false
 }

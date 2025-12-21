@@ -1,21 +1,21 @@
 package main
 
-// dfsIterative melakukan pencarian file menggunakan DFS secara iteratif dengan stack
+// dfsIterative melakukan pencarian file atau direktori menggunakan DFS secara iteratif dengan stack
 func dfsIterative(root *Node, target string) (string, bool) {
 	if root == nil {
 		return "", false
 	}
-	
+
 	// Inisialisasi stack
 	stack := &Stack{}
-	
+
 	// Push root ke stack
 	rootItem := StackItem{
 		node: root,
 		path: root.Name,
 	}
 	pushStack(stack, rootItem)
-	
+
 	// Proses selama stack tidak kosong
 	for !isStackEmpty(stack) {
 		// Pop item dari stack
@@ -23,22 +23,22 @@ func dfsIterative(root *Node, target string) (string, bool) {
 		if !ok {
 			break
 		}
-		
+
 		var currentNode *Node
 		var currentPath string
 		currentNode = item.node
 		currentPath = item.path
-		
+
 		// Skip jika node nil
 		if currentNode == nil {
 			continue
 		}
-		
-		// Cek apakah node saat ini adalah target
-		if !currentNode.IsDir && currentNode.Name == target {
+
+		// Cek apakah node saat ini adalah target (baik file maupun direktori)
+		if currentNode.Name == target {
 			return currentPath, true
 		}
-		
+
 		// Jika node adalah direktori, push semua children ke stack
 		if currentNode.IsDir {
 			// Push children dalam urutan terbalik agar diproses dari kiri ke kanan
@@ -53,7 +53,7 @@ func dfsIterative(root *Node, target string) (string, bool) {
 			}
 		}
 	}
-	
-	// File tidak ditemukan
+
+	// File/direktori tidak ditemukan
 	return "", false
 }

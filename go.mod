@@ -1,3 +1,3 @@
-module dfs-filesystem
+module pacos
 
 go 1.23.1
