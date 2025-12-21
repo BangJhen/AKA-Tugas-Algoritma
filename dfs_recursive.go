@@ -1,48 +1,15 @@
 package main
 
-// dfsRecursive melakukan pencarian file atau direktori menggunakan DFS secara rekursif
-func dfsRecursive(node *Node, target string) (string, bool) {
-	if node == nil {
-		return "", false
+// dfsRecursive melakukan pencarian pada flat stack dengan linear recursion
+// Relasi rekurensi: T(n) = T(n-1) + 1
+// Kompleksitas: O(n)
+func dfsRecursive(flatStack []FlatNode, target string, index int) (string, bool) {
+	// Operasi dasar: comparison (seperti contoh di modul)
+	if flatStack[index].Name == target {
+		return flatStack[index].Path, true
 	}
 
-	// Panggil helper function dengan path awal
-	return dfsRecursiveHelper(node, target, node.Name)
-}
-
-// dfsRecursiveHelper adalah fungsi helper untuk DFS rekursif
-func dfsRecursiveHelper(node *Node, target string, currentPath string) (string, bool) {
-	// Base case: jika node nil
-	if node == nil {
-		return "", false
-	}
-
-	// Cek apakah node saat ini adalah target (baik file maupun direktori)
-	// Operasi Dasar (Karena Sering Dilakukan)
-	if node.Name == target {
-		return currentPath, true
-	}
-
-	// Jika node adalah direktori, cari di children-nya
-	if node.IsDir {
-		var i int
-		for i = 0; i < len(node.Children); i++ {
-			child := node.Children[i]
-
-			// Buat path baru
-			newPath := currentPath + "/" + child.Name
-
-			// Rekursi ke child
-			var path string
-			var found bool
-
-			path, found = dfsRecursiveHelper(child, target, newPath)
-			if found {
-				return path, true
-			}
-		}
-	}
-
-	// File/direktori tidak ditemukan
-	return "", false
+	// Linear recursion: T(n) = T(n-1) + 1
+	// Sama seperti factorial/power di modul
+	return dfsRecursive(flatStack, target, index+1)
 }

@@ -1,56 +1,16 @@
 package main
 
-// dfsIterative melakukan pencarian file atau direktori menggunakan DFS secara iteratif dengan stack
-func dfsIterative(root *Node, target string) (string, bool) {
-	if root == nil {
-		return "", false
-	}
+// dfsIterative melakukan pencarian pada flat stack dengan iterasi linear
+// Kompleksitas: O(n) - linear search
+func dfsIterative(flatStack []FlatNode, target string) (string, bool) {
+	// Iterasi linear melalui flat stack
+	var i int
 
-	// Inisialisasi stack
-	stack := &Stack{}
-
-	// Push root ke stack
-	rootItem := StackItem{
-		node: root,
-		path: root.Name,
-	}
-	pushStack(stack, rootItem)
-
-	// Proses selama stack tidak kosong
-	for !isStackEmpty(stack) {
-		// Pop item dari stack
-		item, ok := popStack(stack)
-		if !ok {
-			break
-		}
-
-		var currentNode *Node
-		var currentPath string
-		currentNode = item.node
-		currentPath = item.path
-
-		// Skip jika node nil
-		if currentNode == nil {
-			continue
-		}
-
-		// Cek apakah node saat ini adalah target (baik file maupun direktori)
-		if currentNode.Name == target {
-			return currentPath, true
-		}
-
-		// Jika node adalah direktori, push semua children ke stack
-		if currentNode.IsDir {
-			// Push children dalam urutan terbalik agar diproses dari kiri ke kanan
-			var i int
-			for i = len(currentNode.Children) - 1; i >= 0; i-- {
-				child := currentNode.Children[i]
-				childItem := StackItem{
-					node: child,
-					path: currentPath + "/" + child.Name,
-				}
-				pushStack(stack, childItem)
-			}
+	// Linear search (1 + 1 + ... + 1) = O(n) = Sum of One
+	for i = 0; i < len(flatStack); i++ {
+		// Operasi dasar: comparison
+		if flatStack[i].Name == target {
+			return flatStack[i].Path, true
 		}
 	}
 

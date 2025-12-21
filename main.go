@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"time"
 )
 
 func main() {
@@ -47,14 +48,16 @@ func main() {
 
 	printFileSystemStats(userRoot)
 
-	for pilih != 6 {
+	// Flatten tree menjadi stack SEKALI di awal (di luar loop)
+	// Sehingga overhead flatten tidak mempengaruhi perbandingan rekursif vs iteratif
+	flatStack := flattenTreeToStack(userRoot)
+
+	for pilih != 4 {
 		fmt.Println("=== SISTEM PENCARIAN FILE SYSTEM DENGAN DFS ===")
 		fmt.Println("1. Tampilkan Diretory")
-		fmt.Println("2. Pencarian dengan DFS Rekursif")
-		fmt.Println("3. Pencarian dengan DFS Iteratif")
-		fmt.Println("4. Pencarian dengan DFS Flatten (Tree → Stack → Linear Recursion)")
-		fmt.Println("5. Benchmark & Komparasi Waktu")
-		fmt.Println("6. Exit")
+		fmt.Println("2. Pencarian dengan DFS Rekursif (Linear Recursion)")
+		fmt.Println("3. Pencarian dengan DFS Iteratif (Linear Loop)")
+		fmt.Println("4. Exit")
 		fmt.Print("Pilih: ")
 		fmt.Scanln(&pilih)
 
@@ -64,49 +67,36 @@ func main() {
 			printFileSystem(userRoot, 0)
 			fmt.Println()
 		case 2:
-			fmt.Println("=== PENCARIAN DENGAN DFS REKURSIF ===")
-			fmt.Print("Cari File Atau Directory: ")
-			fmt.Scanln(&target)
-
-			path, found = dfsRecursive(userRoot, target)
-			if found {
-				fmt.Printf("File/Directory Ditemukan! Path: %s\n", path)
-			} else {
-				fmt.Printf("File %s tidak ditemukan.\n", target)
-			}
-			fmt.Println()
-		case 3:
-			fmt.Println("=== PENCARIAN DENGAN DFS ITERATIF ===")
-			fmt.Print("Cari File Atau Directory: ")
-			fmt.Scanln(&target)
-
-			path, found = dfsIterative(userRoot, target)
-			if found {
-				fmt.Printf("File/Directory Ditemukan! Path: %s\n", path)
-			} else {
-				fmt.Printf("File %s tidak ditemukan.\n", target)
-			}
-			fmt.Println()
-		case 4:
-			fmt.Println("=== PENCARIAN DENGAN DFS FLATTEN ===")
-			fmt.Println("Metode: Tree → Flatten ke Stack → Linear Recursion")
 			fmt.Print("Masukkan nama file/direktori yang dicari: ")
 			fmt.Scanln(&target)
 
-			fmt.Println("\n--- Step 1: Flatten Tree ke Stack ---")
-			flatStack := flattenTreeToStack(userRoot)
-			fmt.Printf("Tree berhasil di-flatten menjadi %d nodes linear\n", len(flatStack))
+			start := time.Now()
+			path, found = dfsRecursive(flatStack, target, 0)
+			elapsed := time.Since(start)
 
-			fmt.Println("\n--- Step 2: Search dengan Linear Recursion ---")
-			path, found = dfsWithFlatten(userRoot, target)
 			if found {
 				fmt.Printf("File/Directory Ditemukan! Path: %s\n", path)
 			} else {
 				fmt.Printf("File %s tidak ditemukan.\n", target)
 			}
-		case 5:
-			benchmarkMenu(userRoot)
-		case 6:
+			fmt.Printf("Waktu pencarian: %v (%d ns)\n", elapsed, elapsed.Nanoseconds())
+			fmt.Println()
+		case 3:
+			fmt.Print("Masukkan nama file/direktori yang dicari: ")
+			fmt.Scanln(&target)
+
+			start := time.Now()
+			path, found = dfsIterative(flatStack, target)
+			elapsed := time.Since(start)
+
+			if found {
+				fmt.Printf("File/Directory Ditemukan! Path: %s\n", path)
+			} else {
+				fmt.Printf("File %s tidak ditemukan.\n", target)
+			}
+			fmt.Printf("Waktu pencarian: %v (%d ns)\n", elapsed, elapsed.Nanoseconds())
+			fmt.Println()
+		case 4:
 			fmt.Println("Terima kasih!")
 		default:
 			fmt.Println("Pilihan tidak valid!")
