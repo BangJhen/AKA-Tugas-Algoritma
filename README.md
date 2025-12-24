@@ -31,7 +31,7 @@ go run .
 atau
 
 ```bash
-go run main.go node.go dfs_recursive.go dfs_iterative.go
+go run main.go node.go dfs_recursive.go dfs_iterative.go sample_filesystems.go
 ```
 
 ## Struktur Data
