@@ -7,9 +7,9 @@ func dfsRecursive(flatStack []FlatNode, target string, index int) (string, bool)
 	// Operasi dasar: comparison (seperti contoh di modul)
 	if flatStack[index].Name == target {
 		return flatStack[index].Path, true
+	} else {
+		// Linear recursion: T(n) = T(n-1) + 1
+		// Sama seperti factorial/power di modul
+		return dfsRecursive(flatStack, target, index+1)
 	}
-
-	// Linear recursion: T(n) = T(n-1) + 1
-	// Sama seperti factorial/power di modul
-	return dfsRecursive(flatStack, target, index+1)
 }
