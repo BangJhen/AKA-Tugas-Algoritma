@@ -21,40 +21,8 @@ pip install -r requirements.txt
 
 ## Cara Menjalankan
 
-### 1. Mode Command Line (CLI)
 
-Jalankan program berbasis terminal:
-
-```bash
-python main.py
-```
-
-**Fitur CLI:**
-- Menu interaktif di terminal
-- Pilih file system (SmallOS, PacOS, LargeOS, dll)
-- Tampilkan struktur direktori
-- Cari file dengan DFS Rekursif atau Iteratif
-
-**Contoh Penggunaan:**
-```
-=== PILIH FILE SYSTEM ===
-1. PacOS (Default - Medium, ~50 nodes)
-2. SmallOS (Small - ~20 nodes)
-...
-Pilih: 1
-
-=== SISTEM PENCARIAN FILE SYSTEM DENGAN DFS ===
-1. Tampilkan Diretory
-2. Pencarian dengan DFS Rekursif
-3. Pencarian dengan DFS Iteratif
-4. Exit
-Pilih: 2
-
-Masukkan nama file yang dicari: bootloader
-File Ditemukan! Path: PacOS/System/Kernel/bootloader
-```
-
-### 2. Mode Grafis (GUI)
+### Mode Grafis (GUI)
 
 Jalankan aplikasi dengan interface web modern:
 
@@ -147,52 +115,6 @@ Browser akan otomatis terbuka di `http://localhost:8501`
 - quarterly_report
 - text_editor
 
-## Troubleshooting
-
-### Program tidak jalan
-```bash
-# Pastikan di direktori yang benar
-cd "path/to/Sistem File System PacOS"
-
-# Jalankan ulang
-python main.py
-```
-
-### Streamlit tidak bisa diakses
-```bash
-# Install ulang Streamlit
-pip install --upgrade streamlit
-
-# Jalankan dengan port berbeda
-streamlit run streamlit_app.py --server.port 8502
-```
-
-### Import error
-```bash
-# Pastikan semua file Python ada di folder yang sama
-ls *.py
-
-# Hasil harus menampilkan: main.py, node.py, dfs_recursive.py, dll
-```
-
-## Testing
-
-Jalankan script testing untuk memverifikasi program:
-
-```bash
-python test.py
-```
-
-Output yang benar:
-```
-Test Program File System PacOS
-========================================
-[OK] bootloader -> PacOS/System/Kernel/bootloader
-[OK] calculator -> PacOS/Programs/Office/calculator
-...
-Test selesai!
-```
-
 ## Kompleksitas Algoritma
 
 | Algoritma | Time | Space | Keterangan |
@@ -201,15 +123,5 @@ Test selesai!
 | DFS Iteratif | O(n) | O(n) | Flat stack |
 
 Kedua algoritma memiliki kompleksitas waktu yang sama (O(n)), perbedaan utama adalah penggunaan memory.
-
-## Lisensi
-
-Program ini dibuat untuk keperluan akademik - Tugas AKA Semester 3.
-
-## Kontak
-
-Untuk pertanyaan atau masalah, silakan hubungi pengembang.
-
----
 
 **Selamat mencoba!** 🚀
