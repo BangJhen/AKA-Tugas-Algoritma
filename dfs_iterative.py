@@ -1,6 +1,9 @@
 def dfs_iterative(flat_stack, target):
-    for i in range(len(flat_stack)):
+    found = False
+    i = 0
+    while (i < len(flat_stack) and not found):
         if flat_stack[i].name == target:
-            return flat_stack[i].path, True
+            found = True
+        i += 1
     
-    return "", False
+    return flat_stack[i].path, found
